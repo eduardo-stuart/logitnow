@@ -6,7 +6,7 @@ A simple, yet powerfull logger
 
 ## Objetive
 
-Easily prints message logs with custom fields that can be specified for each message or defined as default.
+Easily prints message logs with custom fields that can be specified for each message (or defined as default).
 
 Build to simplify the creation of log messages that can be easily searched by **category**, **tag**, **message** and **object contents**
 
@@ -22,7 +22,7 @@ LogIt.now(message: string, category: string, tag: string, xtra: object): void
 
 ---
 
-### Details 
+## Details 
 
 * **Message**: the message that will be printed
   * If no message is defined, this method does nothing
@@ -32,14 +32,16 @@ LogIt.now(message: string, category: string, tag: string, xtra: object): void
   * By *default*, this field's value is **INFO**
   * You can specify any string that suits your needs
   * If you use **INFO**, **WARN**, **ERROR**, etc, the respective *console* command will be used (*console.info*, *console.warn*, *console.error*, etc)
+  * If you use some custom string, the console's command will be **log** (*console.log*)
 
 * **Tag**: some tag for this log message; it can be used to help filtering all the logs for a specific tag
   * By *default*, this field's value is **null**
 
-* **Extra Info**: Optional object that will be printed at end
+* **Extra Info**: Optional object that will be printed at end of the message
 
+---
 
-#### Simplest Case
+## Simplest Use Case
 
 To print a message, use the **now** method with just the message:
 
@@ -56,7 +58,7 @@ This will print on the terminal:
 ```
 
 
-#### Specifying a Category and a Tag
+## Specifying a Category and a Tag
 
 For each message, you can inform the **category** and the **tag**
 
@@ -72,7 +74,7 @@ This will print on the terminal:
 [ERROR] (MAIN APPLICATION) Error Trying to Connect to the Database 
 ```
 
-#### Set a default **Category** and **Tag**
+## Set a default **Category** and **Tag**
 
 You can set a default value for a **category** and **tag**. These will be used no category or tag is defined on the **now** method.
 
@@ -92,7 +94,7 @@ LogIt.setTag('Best App Ever')
 LogIt.now('Creating new database connection')
 
 
-// You still can specify a category and/or tag for each log message, without losing the *defaults*
+// You still can specify a category and/or tag for each log message, without losing the defaults
 LogIt.now('This is not a problem that we will fix right now', 'ERROR')
 
 // Using the *default*
@@ -109,7 +111,7 @@ These commands will print the following messages:
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
 
-#### Include an Object with Extra Info
+## Include an Object with Extra Info
 
 You can create an object, or use one already created, to be assigned on the message.
 
