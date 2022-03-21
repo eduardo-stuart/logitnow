@@ -111,6 +111,8 @@ These commands will print the following messages:
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://matomo.eduardostuart.pro.br/matomo.php?idsite=13&amp;rec=1" style="border:0" alt="" />
+
 ## Include an Object with Extra Info
 
 You can create an object, or use one already created, to be assigned on the message.
