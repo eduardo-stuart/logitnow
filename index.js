@@ -67,4 +67,4 @@
   }
 }
 
-module.exports = new LogIt()
+module.exports = LogIt

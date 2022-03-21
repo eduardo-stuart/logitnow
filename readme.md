@@ -48,7 +48,9 @@ To print a message, use the **now** method with just the message:
 ```javascript
 const LogIt = require("logitnow")
 
-LogIt.now('Testing the New Log System')
+const log = new LogIt()
+
+log.now('Testing the New Log System')
 ```
 
 This will print on the terminal:
@@ -65,7 +67,9 @@ For each message, you can inform the **category** and the **tag**
 ```javascript
 const LogIt = require("logitnow")
 
-LogIt.now('Error Trying to Connect to the Database', 'ERROR', 'Main Application')
+const log = new LogIt()
+
+log.now('Error Trying to Connect to the Database', 'ERROR', 'Main Application')
 ```
 
 This will print on the terminal:
@@ -81,23 +85,25 @@ You can set a default value for a **category** and **tag**. These will be used i
 ```javascript
 const LogIt = require("logitnow")
 
-LogIt.now('Using the default values')
+const log = new LogIt()
+
+log.now('Using the default values')
 
 // Setting a default category
-LogIt.setCategory('DEBUG')
+log.setCategory('DEBUG')
 
-LogIt.now('Start the debug session')
+log.now('Start the debug session')
 
 // Setting a default tag
-LogIt.setTag('Best App Ever')
+log.setTag('Best App Ever')
 
-LogIt.now('Creating new database connection')
+log.now('Creating new database connection')
 
 // You still can specify a category and/or tag for each log message, without losing the defaults
-LogIt.now('This is not a problem that we will fix right now', 'ERROR')
+log.now('This is not a problem that we will fix right now', 'ERROR')
 
 // Using the *default*
-LogIt.now('In case of error, we will retry this ten times...')
+log.now('In case of error, we will retry this ten times...')
 ```
 
 These commands will print the following messages:
@@ -115,9 +121,12 @@ These commands will print the following messages:
 You can reset **category's value** and **tag's value** calling these methods without any parameter:
 
 ```javascript
+const LogIt = require("logitnow")
+
+const log = new LogIt()
 ...
-LogIt.setCategory()
-LogIt.setTag()
+log.setCategory()
+log.setTag()
 ...
 ```
 
@@ -131,7 +140,9 @@ You can create an object, or use one already created, to be assigned on the mess
 ```javascript
 const LogIt = require("logitnow")
 
-LogIt.now('Error trying to connect to remote server', 'ERROR', null, { endpoint: 'test.com/endpoint', timestamp: new Date(), releaseCode: '0.01a'})
+const log = new LogIt()
+
+log.now('Error trying to connect to remote server', 'ERROR', null, { endpoint: 'test.com/endpoint', timestamp: new Date(), releaseCode: '0.01a'})
 ```
 
 This will print the following message:
