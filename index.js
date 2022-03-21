@@ -51,7 +51,9 @@
    * @param {string} newCategory The category that will be the default for the next log messages
    */
   setCategory(newCategory) {
-    if (typeof newCategory === 'string') this.defaultCategory = `[${newCategory.trim().toUpperCase()}]`
+    this.defaultCategory = newCategory 
+      ? typeof newCategory === 'string' ? `[${newCategory.trim().toUpperCase()}]` : '[INFO]'
+      : '[INFO]'
   }
 
   /**
@@ -59,9 +61,10 @@
    * @param {string} newTag The tag that will be the default for the next log messages
    */
   setTag(newTag) {
-    if (typeof newTag === 'string') this.defaultTag = `(${newTag.trim().toUpperCase()})`
+    this.defaultTag = newTag
+      ? typeof newTag === 'string' ? `(${newTag.trim().toUpperCase()})` : null
+      : null
   }
-
 }
 
 module.exports = new LogIt()

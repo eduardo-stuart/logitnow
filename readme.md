@@ -8,7 +8,7 @@ A simple, yet powerfull logger
 
 Easily prints message logs with custom fields that can be specified for each message (or defined as default).
 
-Build to simplify the creation of log messages that can be easily searched by **category**, **tag**, **message** and **object contents**
+Builded to simplify the creation of log messages that can be easily searched by **category**, **tag**, **message** and **object contents**
 
 ---
 
@@ -76,7 +76,7 @@ This will print on the terminal:
 
 ## Set a default **Category** and **Tag**
 
-You can set a default value for a **category** and **tag**. These will be used no category or tag is defined on the **now** method.
+You can set a default value for a **category** and **tag**. These will be used if no category or tag is defined on the **now** method.
 
 ```javascript
 const LogIt = require("logitnow")
@@ -92,7 +92,6 @@ LogIt.now('Start the debug session')
 LogIt.setTag('Best App Ever')
 
 LogIt.now('Creating new database connection')
-
 
 // You still can specify a category and/or tag for each log message, without losing the defaults
 LogIt.now('This is not a problem that we will fix right now', 'ERROR')
@@ -110,6 +109,18 @@ These commands will print the following messages:
 [ERROR] (BEST APP EVER) This is not a problem that we will fix right now 
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
+
+### Resetting for the Defaults
+
+You can reset **category's value** and **tag's value** calling these methods without any parameter:
+
+```javascript
+...
+LogIt.setCategory()
+LogIt.setTag()
+...
+```
+
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://matomo.eduardostuart.pro.br/matomo.php?idsite=13&amp;rec=1" style="border:0" alt="" />
 
