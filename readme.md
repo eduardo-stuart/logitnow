@@ -116,7 +116,7 @@ These commands will print the following messages:
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
 
-### Resetting for the Defaults
+### Resetting to Defaults
 
 You can reset **category's value** and **tag's value** calling these methods without any parameter:
 
