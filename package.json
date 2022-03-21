@@ -1,0 +1,9 @@
+{
+  "name": "logitnow",
+  "version": "1.0.0",
+  "description": "A simple, yet powerfull logger",
+  "main": "index.js",
+  "keywords": ["logitnow", "logger", "log", "simple yet powerfull"],
+  "author": "Eduardo Stuart (eduardostuart.pro.br)",
+  "license": "ISC"
+}
