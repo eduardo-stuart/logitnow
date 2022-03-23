@@ -149,7 +149,7 @@ This will print the following message:
 
 ```
 [ERROR] Error trying to connect to remote server 
-Extra Info: {
+{
     "endpoint": "test.com/endpoint",
     "timestamp": "2022-03-21T16:24:15.737Z",
     "releaseCode": "0.01a"

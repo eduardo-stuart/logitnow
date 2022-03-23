@@ -1,14 +1,23 @@
 {
   "name": "logitnow",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple, yet powerfull logger",
   "main": "index.js",
+  "homepage": "https://github.com/eduardo-stuart/logitnow",
   "keywords": [
     "logitnow",
     "logger",
     "log",
     "simple yet powerfull"
   ],
-  "author": "Eduardo Stuart (https://eduardostuart.pro.br)",
+  "author": {
+    "name": "Eduardo Stuart",
+    "email": "eduardostuart.ti@gmail.com",
+    "url": "https://eduardostuart.pro.br/"
+  },  
+  "bugs": {
+    "url": "https://github.com/eduardo-stuart/logitnow/issues"
+  },
+
   "license": "ISC"
 }

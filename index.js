@@ -26,7 +26,7 @@
     if (!message) return
     const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.defaultCategory
     const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.defaultTag
-    const xtraInfo = xtra ? `\nExtra Info: ${JSON.stringify(xtra, null, 4)}` : null
+    const xtraInfo = xtra ? `\n${JSON.stringify(xtra, null, 4)}` : null
     const fullMessage = `${theCategory ? theCategory : ""}${theTag ? " " + theTag : ""} ${message} ${xtraInfo ? xtraInfo : ""}`
   
     switch(theCategory) {
@@ -57,7 +57,6 @@
   }
 
   /**
-   * 
    * @param {string} newTag The tag that will be the default for the next log messages
    */
   setTag(newTag) {
