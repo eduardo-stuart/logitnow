@@ -4,7 +4,7 @@ A simple, yet powerfull logger
 
 ---
 
-## Objetive
+## Objective
 
 Easily prints message logs with custom fields that can be specified for each message (or defined as default).
 
@@ -156,8 +156,35 @@ This will print the following message:
 }
 ```
 
+## Include a Timestamp
+
+To include the timestamp before each log message, call the method **showTimestamp()** with *true* as argument.
+
+```
+const log = new (require("logitnow"))()
+
+log.now('Testing with default values')
+log.includeTimestamp(true)
+log.now('Now with timestamp')
+log.includeTimestamp(false)
+log.now('Timestamp deactivated')
+```
+
+This will print the following messages on the terminal:
+
+```
+[INFO] Testing with default values 
+{ 2022-03-28T17:44:59.864Z } [INFO] Now with timestamp 
+[INFO] Timestamp deactivated
+```
+
+To deactivate, use the same method, but passing *false* as argument.
+
+
 ---
 
 ## History
 
+**v1.0.6**: Added support to print the current date and time at the beginning of the message
+**v1.0.1~v1.0.5**: Minor fixes
 **v1.0**: Initial Release

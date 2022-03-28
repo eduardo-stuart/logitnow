@@ -10,8 +10,9 @@
 
  class LogIt {
 
-  defaultCategory = '[INFO]'
-  defaultTag = null
+  #defaultCategory = '[INFO]'
+  #defaultTag = null
+  #timestamp = false
 
   /**
    * 
@@ -24,26 +25,23 @@
   now(message, category, tag, xtra) {
 
     if (!message) return
-    const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.defaultCategory
-    const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.defaultTag
+    const currentTimeStamp = this.#timestamp ? `{ ${new Date().toISOString()} } ` : ''
+    const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.#defaultCategory
+    const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.#defaultTag
     const xtraInfo = xtra ? `\n${JSON.stringify(xtra, null, 4)}` : null
-    const fullMessage = `${theCategory ? theCategory : ""}${theTag ? " " + theTag : ""} ${message} ${xtraInfo ? xtraInfo : ""}`
+    const fullMessage = `${currentTimeStamp}${theCategory ? theCategory : ""}${theTag ? " " + theTag : ""} ${message} ${xtraInfo ? xtraInfo : ""}`
   
     switch(theCategory) {
       case 'INFO':
-        console.info(fullMessage)
-        break
+        return console.info(fullMessage)
       case 'ERROR':
-        console.error(fullMessage)
-        break
+        return console.error(fullMessage)
       case 'WARN':
-        console.warn(fullMessage)
-        break  
+        return console.warn(fullMessage)
       case 'DEBUG':
-        console.debug(fullMessage)
-        break
+        return console.debug(fullMessage)
       default:
-        console.log(fullMessage)
+        return console.log(fullMessage)
     }    
   }
 
@@ -51,7 +49,7 @@
    * @param {string} newCategory The category that will be the default for the next log messages
    */
   setCategory(newCategory) {
-    this.defaultCategory = newCategory 
+    this.#defaultCategory = newCategory 
       ? typeof newCategory === 'string' ? `[${newCategory.trim().toUpperCase()}]` : '[INFO]'
       : '[INFO]'
   }
@@ -60,9 +58,19 @@
    * @param {string} newTag The tag that will be the default for the next log messages
    */
   setTag(newTag) {
-    this.defaultTag = newTag
+    this.#defaultTag = newTag
       ? typeof newTag === 'string' ? `(${newTag.trim().toUpperCase()})` : null
       : null
+  }
+
+  /**
+   * Will the log messages includes a timestamp?
+   * @param {boolean} choice 
+   */
+  includeTimestamp(choice) {
+    this.#timestamp = choice
+      ? typeof choice === 'boolean' ? choice : false
+      : false
   }
 }
 
