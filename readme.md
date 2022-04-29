@@ -1,6 +1,6 @@
 # LogItNow
 
-A simple, yet powerfull logger
+A simple, yet powerful logger
 
 ---
 
@@ -116,9 +116,92 @@ These commands will print the following messages:
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
 
+### Using the Flat Format
+
+If you want the output to be printed on a single line, you can set this using **setFlat**'s method.
+
+Consider the following object:
+
+```
+const customer = {
+  name: 'John',
+  code: 23,
+  list: [
+    { item: 'Orange Juice', quantity: 3, price: '23.99' },
+    { item: 'Chips', quantity: 2, price: '12.49' },
+  ]
+}
+``` 
+
+If you log this object using the default values:
+```
+...
+  log.now('Shop Items', 0, 0, customer)
+...
+```
+This is what it will be printed on terminal:
+
+```
+[INFO] Shopping Items 
+{
+  "name": "John",
+  "code": 23,
+  "list": [
+    {
+      "item": "Orange Juice",
+      "quantity": 3,
+      "price": "23.99"
+    },
+    {
+      "item": "Chips",
+      "quantity": 2,
+      "price": "12.49"
+    }
+  ]
+}
+```
+
+It's more ease to read, but not always the best option. Using multi-lines for each message can produce bad results for others systems (like **Kibana**). If you need that each log message uses only one line, you can either:
+
+* Set **isFlat** as default
+* Call the **flat** method, that accepts the same arguments as the method **now** (more details below)
+
+### Example setting TRUE to *isFlat*
+
+```
+const log = new (require('./index'))()
+log.setFlat(true)
+
+const customer = {
+  name: 'John',
+  code: 23,
+  list: [
+    { item: 'Orange Juice', quantity: 3, price: '23.99' },
+    { item: 'Chips', quantity: 2, price: '12.49' },
+  ]
+}
+
+log.now('Shopping Items', 0, 0, customer)
+```
+
+This will be the result:
+
+```
+[INFO] Shopping Items {"name":"John","code":23,"list":[{"item":"Orange Juice","quantity":3,"price":"23.99"},{"item":"Chips","quantity":2,"price":"12.49"}]}
+```
+
+You can also ignore the defaults, using two methods (note that both uses the same parameters of **LogIt.now**):
+
+```
+LogIt.flat(message: string, category: string, tag: string, xtra: object): void
+LogIt.pretty(message: string, category: string, tag: string, xtra: object): void
+```
+
+**LogIt.flat** will print the message in only one line, despite the default; and **LogIt.pretty** will print it in a more human friendly fashion, also despite the default.
+
 ### Resetting to Defaults
 
-You can reset **category's value** and **tag's value** calling these methods without any parameter:
+You can reset **category's value**,  **tag's value** and **isFlat's flag** calling these methods without any parameter:
 
 ```javascript
 const LogIt = require("logitnow")
@@ -127,6 +210,7 @@ const log = new LogIt()
 ...
 log.setCategory()
 log.setTag()
+log.setFlat()
 ...
 ```
 
@@ -185,6 +269,10 @@ To deactivate, use the same method, but passing *false* as argument.
 
 ## History
 
+**v1.1.0**: Added support to print the message using flat format
+
 **v1.0.6**: Added support to print the current date and time at the beginning of the message
+
 **v1.0.1~v1.0.5**: Minor fixes
+
 **v1.0**: Initial Release

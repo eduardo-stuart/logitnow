@@ -10,25 +10,31 @@
 
  class LogIt {
 
-  #defaultCategory = '[INFO]'
-  #defaultTag = null
-  #timestamp = false
+  __defaultCategory = '[INFO]'
+  __defaultTag = null
+  __timestamp = false
+  __flatInfo = false
+
 
   /**
+   * Prints the message using the passing parameters or the defaults
    * 
    * @param {string} message The message that will be printed; is none is specified, this method does nothing
    * @param {string} category The category of this log message; the *default* is **INFO**
    * @param {string} tag  The tag of this log message; the *default* is **null**
    * @param {object} xtra Object with extra info that can be printed; it is optional
-   * @returns 
    */
   now(message, category, tag, xtra) {
 
     if (!message) return
-    const currentTimeStamp = this.#timestamp ? `{ ${new Date().toISOString()} } ` : ''
-    const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.#defaultCategory
-    const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.#defaultTag
-    const xtraInfo = xtra ? `\n${JSON.stringify(xtra, null, 4)}` : null
+    const currentTimeStamp = this.__timestamp ? `{ ${new Date().toISOString()} } `: ''
+    const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.__defaultCategory
+    const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.__defaultTag
+    const xtraInfo = xtra
+      ? this.__flatInfo
+        ? JSON.stringify(xtra)
+        : `\n${JSON.stringify(xtra, null, 2)}`
+      : null
     const fullMessage = `${currentTimeStamp}${theCategory ? theCategory : ""}${theTag ? " " + theTag : ""} ${message} ${xtraInfo ? xtraInfo : ""}`
   
     switch(theCategory) {
@@ -45,11 +51,41 @@
     }    
   }
 
+   /**
+   * Prints the message using the flat format, despite the actual default setting
+   * 
+   * @param {string} message The message that will be printed; is none is specified, this method does nothing
+   * @param {string} category The category of this log message; the *default* is **INFO**
+   * @param {string} tag  The tag of this log message; the *default* is **null**
+   * @param {object} xtra Object with extra info that can be printed; it is optional
+   */
+  flat(message, category, tag, extra) {
+    const oldSetting = this.__flatInfo
+    this.__flatInfo = true
+    this.now(message, category, tag, extra)
+    this.__flatInfo = oldSetting
+  }
+
+   /**
+   * Prints the message using the pretty format, despite the actual default setting
+   * 
+   * @param {string} message The message that will be printed; is none is specified, this method does nothing
+   * @param {string} category The category of this log message; the *default* is **INFO**
+   * @param {string} tag  The tag of this log message; the *default* is **null**
+   * @param {object} xtra Object with extra info that can be printed; it is optional
+   */
+  pretty(message, category, tag, extra) {
+    const oldSetting = this.__flatInfo
+    this.__flatInfo = false
+    this.now(message, category, tag, extra)
+    this.__flatInfo = oldSetting
+  }
+
   /**
    * @param {string} newCategory The category that will be the default for the next log messages
    */
   setCategory(newCategory) {
-    this.#defaultCategory = newCategory 
+    this.__defaultCategory = newCategory 
       ? typeof newCategory === 'string' ? `[${newCategory.trim().toUpperCase()}]` : '[INFO]'
       : '[INFO]'
   }
@@ -58,9 +94,15 @@
    * @param {string} newTag The tag that will be the default for the next log messages
    */
   setTag(newTag) {
-    this.#defaultTag = newTag
+    this.__defaultTag = newTag
       ? typeof newTag === 'string' ? `(${newTag.trim().toUpperCase()})` : null
       : null
+  }
+
+  setFlat(choice) {
+    this.__flatInfo = choice
+      ? typeof choice === 'boolean' ? choice : false
+      : false
   }
 
   /**
@@ -68,7 +110,7 @@
    * @param {boolean} choice 
    */
   includeTimestamp(choice) {
-    this.#timestamp = choice
+    this.__timestamp = choice
       ? typeof choice === 'boolean' ? choice : false
       : false
   }
