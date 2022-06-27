@@ -58,7 +58,7 @@ This will print on the terminal:
 ```
 [INFO] Testing the New Log System 
 ```
-
+---
 
 ## Specifying a Category and a Tag
 
@@ -77,6 +77,8 @@ This will print on the terminal:
 ```
 [ERROR] (MAIN APPLICATION) Error Trying to Connect to the Database 
 ```
+
+---
 
 ## Set a default **Category** and **Tag**
 
@@ -115,8 +117,9 @@ These commands will print the following messages:
 [ERROR] (BEST APP EVER) This is not a problem that we will fix right now 
 [DEBUG] (BEST APP EVER) In case of error, we will retry this ten times... 
 ``` 
+---
 
-### Using the Flat Format
+## Using the Flat Format
 
 If you want the output to be printed on a single line, you can set this using **setFlat**'s method.
 
@@ -199,7 +202,9 @@ LogIt.pretty(message: string, category: string, tag: string, xtra: object): void
 
 **LogIt.flat** will print the message in only one line, despite the default; and **LogIt.pretty** will print it in a more human friendly fashion, also despite the default.
 
-### Resetting to Defaults
+--- 
+
+## Reset to Defaults
 
 You can reset **category's value**,  **tag's value** and **isFlat's flag** calling these methods without any parameter:
 
@@ -216,6 +221,8 @@ log.setFlat()
 
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://matomo.eduardostuart.pro.br/matomo.php?idsite=13&amp;rec=1" style="border:0" alt="" />
+
+--- 
 
 ## Include an Object with Extra Info
 
@@ -239,6 +246,7 @@ This will print the following message:
     "releaseCode": "0.01a"
 }
 ```
+---
 
 ## Include a Timestamp
 
@@ -267,7 +275,29 @@ To deactivate, use the same method, but passing *false* as argument.
 
 ---
 
+## Restrict the Display of Log Messages
+
+It's possible to only publish the Log's messages if a specific **NODE_ENV** is set.
+
+For example, if you want to print all the messages only when in **DEVELOPMENT**, set the NODE_ENV environment to **development** and set the following command:
+
+```
+log.setOnlyEnvironment('development')
+```
+
+To reset, so that all the messages will be printed again for now on, use the same method, but passing **null** as argument.
+
+```
+log.setOnlyEnvironment('development')
+```
+
+You can set/unset this at any time, turning on/off if the messages will or will not be printed.
+
+---
+
 ## History
+
+**v1.2.0**: Added support to print the log messages only if the project is running with a especific environment variable for NODE_ENV
 
 **v1.1.0**: Added support to print the message using flat format
 

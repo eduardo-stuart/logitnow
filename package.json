@@ -1,6 +1,6 @@
 {
   "name": "logitnow",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A simple, yet powerful logger system",
   "main": "index.js",
   "homepage": "https://github.com/eduardo-stuart/logitnow",
@@ -8,7 +8,7 @@
     "logitnow",
     "logger",
     "log",
-    "simple yet powerfull"
+    "simple yet powerful"
   ],
   "author": {
     "name": "Eduardo Stuart",

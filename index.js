@@ -14,6 +14,7 @@
   __defaultTag = null
   __timestamp = false
   __flatInfo = false
+  __environmentVariable = null
 
 
   /**
@@ -25,6 +26,8 @@
    * @param {object} xtra Object with extra info that can be printed; it is optional
    */
   now(message, category, tag, xtra) {
+
+    if (this.__environmentVariable && process.env.NODE_ENV && (process.env.NODE_ENV.toUpperCase()) !== this.__environmentVariable) return
 
     if (!message) return
     const currentTimeStamp = this.__timestamp ? `{ ${new Date().toISOString()} } `: ''
@@ -113,6 +116,17 @@
     this.__timestamp = choice
       ? typeof choice === 'boolean' ? choice : false
       : false
+  }
+
+  /**
+   * What NODE_ENV variable must be set to print the logs on terminal?
+   * If set to null (default value), all the messages will be printed.
+   * @param {boolean} choice
+   */
+  setOnlyEnvironment(choice){
+    this.__environmentVariable = choice
+      ? typeof choice === 'string' ? choice.toUpperCase() : null
+      : null
   }
 }
 
