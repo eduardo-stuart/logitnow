@@ -8,13 +8,15 @@
  * Created by: Eduardo Stuart (https://eduardostuart.pro.br/)
  */
 
- class LogIt {
+class LogIt {
 
   __defaultCategory = '[INFO]'
   __defaultTag = null
   __timestamp = false
   __flatInfo = false
   __environmentVariable = null
+  __alwaysPrintOnErrors = null
+  __ignoreEnvironmentFilters = process.env.IGNORE_ENVIRONMENT_FILTERS === '1' || false
 
 
   /**
@@ -27,20 +29,30 @@
    */
   now(message, category, tag, xtra) {
 
+    if (!message) return
+
+    if (this.__ignoreEnvironmentFilters || category.toUpperCase() === 'ERROR' && this.__alwaysPrintOnErrors)
+      return this.printMessageOnConsole(message, category, tag, xtra)
+
     if (this.__environmentVariable && process.env.NODE_ENV && (process.env.NODE_ENV.toUpperCase()) !== this.__environmentVariable) return
 
-    if (!message) return
-    const currentTimeStamp = this.__timestamp ? `{ ${new Date().toISOString()} } `: ''
+    this.printMessageOnConsole(message, category, tag, xtra)
+
+  }
+
+
+  printMessageOnConsole(message, category, tag, xtra) {
+    const currentTimeStamp = this.__timestamp ? `{ ${new Date().toISOString()} } ` : ''
     const theCategory = category ? `[${String(category).trim().toUpperCase()}]` : this.__defaultCategory
-    const theTag = tag ? `(${String(tag).trim().toUpperCase()})` : this.__defaultTag
+    const theTag = tag ? `(${String(tag).trim()})` : this.__defaultTag
     const xtraInfo = xtra
       ? this.__flatInfo
         ? JSON.stringify(xtra)
         : `\n${JSON.stringify(xtra, null, 2)}`
       : null
     const fullMessage = `${currentTimeStamp}${theCategory ? theCategory : ""}${theTag ? " " + theTag : ""} ${message} ${xtraInfo ? xtraInfo : ""}`
-  
-    switch(theCategory) {
+
+    switch (theCategory) {
       case 'INFO':
         return console.info(fullMessage)
       case 'ERROR':
@@ -51,17 +63,18 @@
         return console.debug(fullMessage)
       default:
         return console.log(fullMessage)
-    }    
+    }
   }
 
-   /**
-   * Prints the message using the flat format, despite the actual default setting
-   * 
-   * @param {string} message The message that will be printed; is none is specified, this method does nothing
-   * @param {string} category The category of this log message; the *default* is **INFO**
-   * @param {string} tag  The tag of this log message; the *default* is **null**
-   * @param {object} xtra Object with extra info that can be printed; it is optional
-   */
+
+  /**
+  * Prints the message using the flat format, despite the actual default setting
+  * 
+  * @param {string} message The message that will be printed; is none is specified, this method does nothing
+  * @param {string} category The category of this log message; the *default* is **INFO**
+  * @param {string} tag  The tag of this log message; the *default* is **null**
+  * @param {object} xtra Object with extra info that can be printed; it is optional
+  */
   flat(message, category, tag, extra) {
     const oldSetting = this.__flatInfo
     this.__flatInfo = true
@@ -69,14 +82,14 @@
     this.__flatInfo = oldSetting
   }
 
-   /**
-   * Prints the message using the pretty format, despite the actual default setting
-   * 
-   * @param {string} message The message that will be printed; is none is specified, this method does nothing
-   * @param {string} category The category of this log message; the *default* is **INFO**
-   * @param {string} tag  The tag of this log message; the *default* is **null**
-   * @param {object} xtra Object with extra info that can be printed; it is optional
-   */
+  /**
+  * Prints the message using the pretty format, despite the actual default setting
+  * 
+  * @param {string} message The message that will be printed; is none is specified, this method does nothing
+  * @param {string} category The category of this log message; the *default* is **INFO**
+  * @param {string} tag  The tag of this log message; the *default* is **null**
+  * @param {object} xtra Object with extra info that can be printed; it is optional
+  */
   pretty(message, category, tag, extra) {
     const oldSetting = this.__flatInfo
     this.__flatInfo = false
@@ -88,7 +101,7 @@
    * @param {string} newCategory The category that will be the default for the next log messages
    */
   setCategory(newCategory) {
-    this.__defaultCategory = newCategory 
+    this.__defaultCategory = newCategory
       ? typeof newCategory === 'string' ? `[${newCategory.trim().toUpperCase()}]` : '[INFO]'
       : '[INFO]'
   }
@@ -98,7 +111,7 @@
    */
   setTag(newTag) {
     this.__defaultTag = newTag
-      ? typeof newTag === 'string' ? `(${newTag.trim().toUpperCase()})` : null
+      ? typeof newTag === 'string' ? `(${newTag.trim()})` : null
       : null
   }
 
@@ -121,12 +134,23 @@
   /**
    * What NODE_ENV variable must be set to print the logs on terminal?
    * If set to null (default value), all the messages will be printed.
-   * @param {boolean} choice
+   * @param {string} choice
    */
-  setOnlyEnvironment(choice){
+  setOnlyEnvironment(choice) {
     this.__environmentVariable = choice
       ? typeof choice === 'string' ? choice.toUpperCase() : null
       : null
+  }
+
+  /**
+  * Will print all messages from 'error' category?
+  * If 'true', this will bypass 'setOnlyEnvironment', but only for 'errors'
+  * @param {boolean} choice
+  */
+  setAlwaysPrintOnErrors(choice) {
+    this.__alwaysPrintOnErrors = choice
+      ? typeof choice === 'boolean' ? choice : false
+      : false
   }
 }
 

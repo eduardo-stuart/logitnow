@@ -12,6 +12,12 @@ Builded to simplify the creation of log messages that can be easily searched by 
 
 ---
 
+## Requirements
+
+This library requires **Node.js v12.x** or higher.
+
+---
+
 ## Examples of Use
 
 The main method to print a message is **LogIt.now**. It accepts four params:
@@ -277,9 +283,9 @@ To deactivate, use the same method, but passing *false* as argument.
 
 ## Restrict the Display of Log Messages
 
-It's possible to only publish the Log's messages if a specific **NODE_ENV** is set.
+It's possible to publish the Log's messages only if a specific **NODE_ENV** is set.
 
-For example, if you want to print all the messages only when in **DEVELOPMENT**, set the NODE_ENV environment to **development** and set the following command:
+For example, if you want to print all the messages when in **DEVELOPMENT** environment, set the NODE_ENV environment to **development** and set the following command:
 
 ```
 log.setOnlyEnvironment('development')
@@ -293,9 +299,25 @@ log.setOnlyEnvironment('development')
 
 You can set/unset this at any time, turning on/off if the messages will or will not be printed.
 
+## Always Print Error Messages
+
+If you want to always print error messagens, despite how **_setOnlyEnvironment_** is set, set **true** to **setAlwaysPrintOnErrors**:
+
+```
+log.setAlwaysPrintOnErrors(true)
+```
+
+To deactivate this, call the same method, but using **false** as parameter.
+
+## Ignore All Environment Filters
+
+If you need to ignore all environment filters, printing all messages despite the environment, set **1** as **IGNORE_ENVIRONMENT_FILTERS** environment's variable. Any value different of **1** will be considered **false**.
+
 ---
 
 ## History
+
+**v1.2.1**: New features: added support to always print on terminal when an "error" occurs; you can now ignore all environment filters (all messages will be printed); Fix: tag will no be printed as UPPERCASE anymore
 
 **v1.2.0**: Added support to print the log messages only if the project is running with a especific environment variable for NODE_ENV
 
