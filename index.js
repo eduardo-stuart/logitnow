@@ -31,7 +31,7 @@ class LogIt {
 
     if (!message) return
 
-    if (this.__ignoreEnvironmentFilters || category.toUpperCase() === 'ERROR' && this.__alwaysPrintOnErrors)
+    if (this.__ignoreEnvironmentFilters || (category && category.toUpperCase() === 'ERROR') && this.__alwaysPrintOnErrors)
       return this.printMessageOnConsole(message, category, tag, xtra)
 
     if (this.__environmentVariable && process.env.NODE_ENV && (process.env.NODE_ENV.toUpperCase()) !== this.__environmentVariable) return
